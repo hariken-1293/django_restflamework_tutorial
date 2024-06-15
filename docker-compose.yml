@@ -1,0 +1,57 @@
+# version: "3"
+
+# services: 
+#   django-test: 
+#     build: 
+#       context: ./containers
+#       dockerfile: Dockerfile
+#     image: django-test
+#     container_name: django-test
+#     tty: true
+#     volumes: 
+#       - .:/app
+#     working_dir: /app
+#     ports: 
+#       - "8000:8000"
+
+# version: '3'
+# services:
+#   # PostgreSQL
+#   postgres_db:
+#     container_name: postgres_db
+#     image: postgres:13-bullseye
+#     env_file: ./docker.env
+#     volumes:
+#       - postgres_data:/var/lib/postgresql/data
+ 
+#   # Django REST framework
+#   backend:
+#     container_name: DRF
+#     env_file: ./docker.env
+#     build: .
+#     command: python3 manage.py runserver 0.0.0.0:8000
+#     volumes:
+#       - .:/code
+#     ports:
+#       - "8000:8000"
+#     depends_on:
+#       - postgres_db
+
+# volumes:
+#   postgres_data:
+
+version: '3'
+
+services:
+  # Django REST framework
+  backend:
+    container_name: DRF
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: python3 manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000"
+    env_file: ./docker.env
